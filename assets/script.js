@@ -39,8 +39,15 @@ const questions = {
     a4: "4. all of the above",
   }
 };
-
-
-
-
 document.getElementById("answers").hidden = true;
+
+var timerEl = document.getElementById("timer");
+
+var startButton = document.getElementById("start");
+startButton.addEventListener("click", function(event) {
+  document.getElementById("answers").hidden = false;
+})
+
+
+
+
