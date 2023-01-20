@@ -39,15 +39,24 @@ const questions = {
     a4: "4. all of the above",
   }
 };
-document.getElementById("answers").hidden = true;
+
+
 
 var timerEl = document.getElementById("timer");
 
+// Switches from start menu to questions
 var startButton = document.getElementById("start");
 startButton.addEventListener("click", function(event) {
+  document.getElementById("beginText").hidden = true;
+  document.getElementById("start").hidden = true;
   document.getElementById("answers").hidden = false;
+  document.getElementById("challenge").textContent = questions.q1.question;
+  document.getElementById("a1").textContent = questions.q1.a1;
+  document.getElementById("a2").textContent = questions.q1.a2;
+  document.getElementById("a3").textContent = questions.q1.a3;
+  document.getElementById("a4").textContent = questions.q1.a4;
 })
 
-
+document.getElementById("answers").hidden = true;
 
 
