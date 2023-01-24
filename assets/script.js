@@ -209,6 +209,8 @@ function stopTimer(){
   document.getElementById("initials").hidden = false;
   document.getElementById("initialsSubmit").hidden = false;
   state= 0;
+} if(timer <= 0) {
+  timer == 0
 }
 
 
@@ -260,7 +262,7 @@ goBackButton.addEventListener("click", goBack);
 
   // Displays the start quiz page
 function goBack(){
-  timer = 75;
+  timer = 45;
   document.getElementById("timer").textContent = "Timer: " + timer;
   document.getElementById("scoreList").textContent = "";
   document.getElementById("scoreList").hidden = true;
