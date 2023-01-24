@@ -1,6 +1,6 @@
 var highScore = [];
 var initials = [];
-var timer = 90;
+var timer = 45;
 var timeInterval;
 var state = 0
 const questions = {
@@ -219,7 +219,7 @@ function enterInitials(){
       //Updates the initials list and highscore list
       initials.push(document.getElementById("initials").value);
       highScore.push(timer);
-      timer = 90;
+      timer = 45;
 
       // Hides the results page
      
@@ -242,10 +242,14 @@ function enterInitials(){
   var initialsSubmitButton = document.getElementById("initialsSubmit");
   initialsSubmitButton.addEventListener("click", enterInitials);
 
-  // Empties the highscore list, initials list, and displays the start quiz page
+  // var highScoreLink = document.getElementById("highScore");
+  // highScoreLink.addEventListener("click", viewHighScore);
+
+
+  // Clears the highscore list and displays the start quiz page
 function clearHighScores(){
-  highscore = [""];
-  initials = [""];
+  highScore = [];
+  initials = [];
   goBack();
 };
 var clearHighScoreButton = document.getElementById("clearHighScore");
