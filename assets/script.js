@@ -42,6 +42,8 @@ const questions = {
 };
 
 
+// Hides the answers/question until needed
+document.getElementById("answers").hidden = true;
 
 var timerEl = document.getElementById("timer");
 
@@ -69,11 +71,22 @@ startButton.addEventListener("click", function (event) {
 });
 
 
+function startTimer() {
+  timeInterval = setInterval(function () {
+    // When timer reaches 0 or below, timer will stop
+    if (timer <= 0) {
+      stopTimer();
+    } else {
+      timer--;
+      document.getElementById("timer").textContent = "Timer: " + timer;
+    }
+  }, 1000);
+}
 
 
 
 
-
+// Variables for the buttons/choices
 var a1Button = document.getElementById("a1");
 var a2Button = document.getElementById("a2");
 var a3Button = document.getElementById("a3");
@@ -82,30 +95,24 @@ var a4Button = document.getElementById("a4");
 
 
 
-
-function answerQuestion1() {
+// Function for when button is clicked, it will assign a number based on choice
+a1Button.addEventListener("click", function answerQuestion1() {
   answerQuestion(1);
-};
-
-
-
-function answerQuestion2() {
+});
+a2Button.addEventListener("click", function answerQuestion2() {
   answerQuestion(2);
-};
-
-
-
-function answerQuestion3() {
+});
+a3Button.addEventListener("click", function answerQuestion3() {
   answerQuestion(3);
-};
-
-
-
-function answerQuestion4() {
+});
+a4Button.addEventListener("click", function answerQuestion4() {
   answerQuestion(4);
-};
+});
 
 
+// Function to change sets of questions. 
+// After a choice is made, the 'state' will move up 1 changing the set of questions
+// If incorrect timer will minus 10
 function answerQuestion(answer) {
   if (state == 1){
     document.getElementById("challenge").textContent = questions.q2.question;
@@ -160,7 +167,7 @@ function answerQuestion(answer) {
   document.getElementById("a3").textContent = questions.q5.a3;
   document.getElementById("a4").textContent = questions.q5.a4;
   document.getElementById("result").hidden = false;
-  if (answer == 3) {
+  if (answer == 4) {
     document.getElementById("result").textContent = "Correct!";
   } else {
     document.getElementById("result").textContent = "Wrong!";
@@ -173,7 +180,7 @@ function answerQuestion(answer) {
     document.getElementById("result").textContent = "Correct!";
   } else {
     document.getElementById("result").textContent = "Wrong!";
-    timer -= 10; //timer = timer - 10;
+    timer -= 10;
     document.getElementById("timer").textContent = "Timer: " + timer;
   }
   stopTimer();
@@ -183,46 +190,79 @@ function answerQuestion(answer) {
 
 
 
-// 
-//   document.getElementById("result").textContent = "Correct";
-// } else {
-//   document.getElementById("result").textContent = "Wrong";
-//   timer -=10;
-//   document.getElementById("timer").textContent = "Timer: " + timer;
-// }
-
-
-
-
-function startTimer() {
-  timeInterval = setInterval(function () {
-    // When timer reaches 0 or below, timer will stop
-    if (timer <= 0) {
-      stopTimer();
-    } else {
-      timer--;
-      document.getElementById("timer").textContent = "Timer: " + timer;
-    }
-  }, 1000);
-}
 // Stops the timer, hides questions, displays results page.
 function stopTimer(){
   // Stops the timer function
   clearInterval(timeInterval);
 
+  // Hide the question pages
+  document.getElementById("answers").hidden = true;
+
+  // Display the result page
+  document.getElementById("challenge").textContent = "All Done!";
+  document.getElementById("initialsText1").textContent = "Your final score is " + timer + ".";
+  document.getElementById("initials").textContent = "";
+
+  document.getElementById("initialsText1").hidden = false;
+  document.getElementById("initialsText2").hidden = false;
+  document.getElementById("initials").value = "";
+  document.getElementById("initials").hidden = false;
+  document.getElementById("initialsSubmit").hidden = false;
+  state= 0;
 }
-document.getElementById("answers").hidden = true;
 
 
-a1Button.addEventListener("click", function answerQuestion1() {
-  answerQuestion(1);
-});
-a2Button.addEventListener("click", function answerQuestion2() {
-  answerQuestion(2);
-});
-a3Button.addEventListener("click", function answerQuestion3() {
-  answerQuestion(3);
-});
-a4Button.addEventListener("click", function answerQuestion4() {
-  answerQuestion(4);
-});
+// Activates when initials are entered after the quiz
+function enterInitials(){
+  // Ensures initials are not empty
+  if(document.getElementById("initials").value.length > 0){
+      //Updates the initials list and highscore list
+      initials.push(document.getElementById("initials").value);
+      highScore.push(timer);
+      timer = 90;
+
+      // Hides the results page
+     
+      document.getElementById("initialsText1").hidden = true;
+      document.getElementById("initialsText2").hidden = true;
+      document.getElementById("initials").hidden = true;
+      document.getElementById("initialsSubmit").hidden = true;
+
+      // Displays the high score page
+      document.getElementById("challenge").textContent = "High Scores";
+      for(var i = 0; i < highScore.length; i++){
+          document.getElementById("scoreList").textContent += initials[i]+": "+highScore[i] + ", ";
+      }
+      document.getElementById("scoreList").hidden = false;
+      document.getElementById("goBack").hidden = false;
+      document.getElementById("clearHighScore").hidden = false;
+    }
+  };
+  
+  var initialsSubmitButton = document.getElementById("initialsSubmit");
+  initialsSubmitButton.addEventListener("click", enterInitials);
+
+  // Empties the highscore list, initials list, and displays the start quiz page
+function clearHighScores(){
+  highscore = [""];
+  initials = [""];
+  goBack();
+};
+var clearHighScoreButton = document.getElementById("clearHighScore");
+clearHighScoreButton.addEventListener("click", clearHighScores);
+
+var goBackButton = document.getElementById("goBack");
+goBackButton.addEventListener("click", goBack);
+
+  // Displays the start quiz page
+function goBack(){
+  timer = 75;
+  document.getElementById("timer").textContent = "Timer: " + timer;
+  document.getElementById("scoreList").textContent = "";
+  document.getElementById("scoreList").hidden = true;
+  document.getElementById("goBack").hidden = true;
+  document.getElementById("clearHighScore").hidden = true;
+  document.getElementById("challenge").textContent = "Coding Quiz Challenge";
+  document.getElementById("beginText").hidden = false;
+  document.getElementById("start").hidden = false;
+}
