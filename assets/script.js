@@ -63,6 +63,10 @@ startButton.addEventListener("click", function (event) {
   document.getElementById("a3").textContent = questions.q1.a3;
   document.getElementById("a4").textContent = questions.q1.a4;
 
+  // Aligns buttons to center
+  document.getElementById("answers").style.textAlign = "center";
+
+
   state = 1
 
 
